@@ -14,6 +14,11 @@ class LiveTranslatorController extends ApiController {
 	function translate() {
 		if ($this->request->post() && ($d=$this->form->validate($this->params))) {
 
+			if(trim($d["q"])===""){
+				$this->api_data = array("result" => "");
+				return;
+			}
+
 			$res = [];
 			$tr = new TranslateClient( $d["source_lang"], $d["target_lang"], [
 				# pomoci on_stats ziskame neco o requestu do translate.google.com

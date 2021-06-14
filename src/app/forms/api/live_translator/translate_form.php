@@ -5,6 +5,7 @@ class TranslateForm extends ApiForm {
 
 		$this->add_field("q", new TextField(array(
 			"help_text" => _("Text k překladu"),
+			"required" => false,
 		)));
 
 		foreach($ATK14_GLOBAL->getSupportedLangs() as $l) {
