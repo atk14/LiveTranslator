@@ -1,0 +1,24 @@
+{
+        "name": "atk14/live-translator",
+        "type": "library",
+        "description": "",
+        "keywords": [],
+        "homepage": "https://github.com/atk14/LiveTranslator",
+        "license": ["MIT"],
+        "authors": [
+                {
+                        "name": "ATK14 Development Team",
+                        "homepage": "https://github.com/orgs/atk14/people"
+                }
+        ],
+        "require": {
+                "php": ">=5.5.0",
+                "stichoza/google-translate-php": "^3.2"
+        },
+        "require-dev": {
+                "atk14/tester": "*"
+        },
+        "autoload": {
+                "classmap": []
+        }
+}
