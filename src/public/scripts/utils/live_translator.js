@@ -20,7 +20,7 @@
 			};
 
 			$.ajax( {
-				url: "/api/cs/live_translator/translate",
+				url: "/api/cs/translator/translate",
 				type: "POST",
 				data: queryParams,
 				dataType: "json",
@@ -65,7 +65,7 @@
 		appendTranslateButton: function() {
 			this.each( function() {
 				var link = $( "<a>", { href: "#", text: "Přeložit", tabindex: "-1000" } )
-					.addClass( "btn btn-success btn-xs" )
+					.addClass( "btn btn-info btn-sm btn-xs" )
 					.addClass( "pull-right" ) // Bootstrap3
 					.addClass( "float-right" ) // Bootstrap4
 					.attr( "role", "button" );
@@ -79,7 +79,19 @@
 					targetInput.translate( $( "#" + sourceInputId ) );
 					return false;
 				} );
-				$( this ).closest( ".form-group" ).before( link );
+
+				var parentFormGroup = $( this ).closest( ".form-group" );
+
+				// If .help-block element doesn`t exist in .form-group just create it.
+				if ( parentFormGroup.find( ".help-block" ).length < 1 ) {
+					var helpBlock = $( "<div>", { text: "" } );
+					helpBlock.addClass( "help-block" );
+					helpBlock.addClass( "form-text" );
+					parentFormGroup.append( helpBlock );
+				}
+
+				parentFormGroup.find( ".help-block" ).prepend( link );
+
 			} );
 		}
 	} );
