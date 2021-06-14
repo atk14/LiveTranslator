@@ -20,7 +20,7 @@
 			};
 
 			$.ajax( {
-				url: "/api/cs/translator/translate",
+				url: "/api/cs/live_translator/translate",
 				type: "POST",
 				data: queryParams,
 				dataType: "json",
