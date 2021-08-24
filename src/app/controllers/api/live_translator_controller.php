@@ -33,6 +33,7 @@ class LiveTranslatorController extends ApiController {
 					$provider = "google";
 				}
 				$sw->stop();
+				$result = LiveTranslator\AfterFilter::Filter($d["q"],$result);
 				$this->api_data = array("result" => $result, "provider" => $provider, "duration" => round($sw->getResult(),3));
 			}catch(Exception $e){
 				$this->_report_fail(array("error" => _("Translator error"), "exception" => get_class($e), "message" => $e->getMessage()), 400);

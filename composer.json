@@ -19,6 +19,6 @@
                 "atk14/tester": "*"
         },
         "autoload": {
-                "classmap": []
+                "classmap": ["src/lib"]
         }
 }
