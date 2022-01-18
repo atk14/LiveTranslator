@@ -16,7 +16,7 @@ class LiveTranslatorController extends ApiController {
 		if ($this->request->post() && ($d=$this->form->validate($this->params))) {
 
 			try{
-				$translator = LiveTranslator\Translator($d["source_lang"],$d["target_lang"]);
+				$translator = new LiveTranslator\Translator($d["source_lang"],$d["target_lang"]);
 				$result = $translator->translate($d["q"],$translation_data);
 				$this->api_data = [
 					"result" => $result,
