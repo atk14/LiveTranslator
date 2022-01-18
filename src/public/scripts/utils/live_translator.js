@@ -65,8 +65,9 @@
 		},
 
 		appendTranslateButton: function() {
+			var linkText = currentLang === "cs" ? "Přeložit" : "Translate";
 			this.each( function() {
-				var link = $( "<a>", { href: "#", text: "Přeložit", tabindex: "-1000" } )
+				var link = $( "<a>", { href: "#", text: linkText, tabindex: "-1000" } )
 					.addClass( "btn btn-info btn-sm btn-xs" )
 					.addClass( "pull-right" ) // Bootstrap3
 					.addClass( "float-right" ) // Bootstrap4
