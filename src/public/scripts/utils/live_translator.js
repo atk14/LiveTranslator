@@ -4,6 +4,8 @@
 
 	var Translator = {};
 
+	var currentLang = $( "html" ).attr( "lang" );
+
 	Translator = {
 		Translate: function( sourceElement, targetElement ) {
 
@@ -20,7 +22,7 @@
 			};
 
 			$.ajax( {
-				url: "/api/cs/live_translator/translate",
+				url: "/api/" + currentLang + "/live_translator/translate",
 				type: "POST",
 				data: queryParams,
 				dataType: "json",
@@ -96,15 +98,13 @@
 		}
 	} );
 
-	var defaultLang = $( "html" ).attr( "lang" );
-
 	// @NOTE: Change data-translatable to 'yes' to turn on translator initialization,
 	// 'no' turns it off.
 	$( "[data-translatable='yes']" ).each( function( idx, el ) {
 		var input = $( el );
 
 		var targetLang = input.data( "translatable_lang" );
-		if ( targetLang === defaultLang ) {
+		if ( targetLang === currentLang ) {
 			return;
 		}
 		input.appendTranslateButton();
