@@ -1,7 +1,7 @@
 <?php
-class TcLiveTranslator extends TcBase {
+class TcAfterFilter extends TcBase {
 
-	function test_AfterFilter(){
+	function test(){
 		$src = 'Foo&nbsp;Bar';
 		$trn = 'Foo & nbsp; Bar';
 		$exp = 'Foo&nbsp;Bar';
