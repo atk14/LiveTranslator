@@ -17,11 +17,6 @@ class LiveTranslatorController extends ApiController {
 	function translate() {
 		if ($this->request->post() && ($d=$this->form->validate($this->params))) {
 
-			if(trim($d["q"])===""){
-				$this->api_data = array("result" => "");
-				return;
-			}
-
 			try{
 				$sw = new StopWatch();
 				$sw->start();

@@ -1,7 +1,7 @@
 <?php
 namespace LiveTranslator;
 
-require_once(__DIR__ . "/../constants.php");
+require_once(__DIR__ . "/constants.php");
 
 class Translator {
 
@@ -14,18 +14,15 @@ class Translator {
 	}
 
 	function translate($text,&$translation_data = []){
-		$translation_data = [
-			"provider" => "none",
-			"duration" => 0.0,
-		];
-		if(trim($text)===""){
-			return "";
-		}
+		$translation_data = [];
 
 		$sw = new \StopWatch();
 		$sw->start();
 
-		if(LIVE_TRANSLATOR_DEEPL_API_AUTH_KEY){
+		if(trim($text)==""){
+			$result = "";
+			$provider = "none";
+		}elseif(LIVE_TRANSLATOR_DEEPL_API_AUTH_KEY){
 			$result = $this->_translate_using_deepl($text);
 			$provider = "deepl";
 		}else{
