@@ -13,7 +13,9 @@
         ],
         "require": {
                 "php": ">=5.5.0",
-                "stichoza/google-translate-php": "^3.2"
+                "stichoza/google-translate-php": "^3.2",
+                "atk14/api-data-fetcher": "^1.10",
+                "atk14/stop-watch": "^0.1"
         },
         "require-dev": {
                 "atk14/tester": "*"
