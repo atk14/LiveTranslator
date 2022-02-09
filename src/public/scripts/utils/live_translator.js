@@ -66,12 +66,16 @@
 
 		appendTranslateButton: function() {
 			var linkText = currentLang === "cs" ? "Přeložit" : "Translate";
+			var linkTitle = currentLang === "cs" ?
+				"Přeložit překladačem z " + currentLang :
+				"Translate from " + currentLang + " using the translator";
 			this.each( function() {
 				var link = $( "<a>", { href: "#", text: linkText, tabindex: "-1000" } )
 					.addClass( "btn btn-info btn-sm btn-xs" )
 					.addClass( "pull-right" ) // Bootstrap3
 					.addClass( "float-right" ) // Bootstrap4
-					.attr( "role", "button" );
+					.attr( "role", "button" )
+					.attr( "title", linkTitle );
 
 				var selfId = $( this ).attr( "id" );
 				selfId = selfId.substr( 0, selfId.lastIndexOf( "_" ) );
@@ -96,6 +100,33 @@
 				parentFormGroup.find( ".help-block" ).prepend( link );
 
 			} );
+		},
+
+		appendSourceLangBadge: function() {
+			var badgeText = currentLang === "cs" ? "Zdroj" : "Source";
+			var badgeTitle = currentLang === "cs" ?
+				"Zdrojový text pro překlad překladačem" :
+				"Source text for translation using the translator";
+			this.each( function() {
+				var badge = $( "<span>", { text: badgeText, tabindex: "-1000" } )
+					.addClass( "badge badge-light" )
+					.addClass( "pull-right" ) // Bootstrap3
+					.addClass( "float-right" ) // Bootstrap4
+					.attr( "title", badgeTitle );
+
+				var parentFormGroup = $( this ).closest( ".form-group" );
+
+				// If .help-block element doesn`t exist in .form-group just create it.
+				if ( parentFormGroup.find( ".help-block" ).length < 1 ) {
+					var helpBlock = $( "<div>", { text: "" } );
+					helpBlock.addClass( "help-block" );
+					helpBlock.addClass( "form-text" );
+					parentFormGroup.append( helpBlock );
+				}
+
+				parentFormGroup.find( ".help-block" ).prepend( badge );
+
+			} );
 		}
 	} );
 
@@ -106,6 +137,7 @@
 
 		var targetLang = input.data( "translatable_lang" );
 		if ( targetLang === currentLang ) {
+			input.appendSourceLangBadge();
 			return;
 		}
 		input.appendTranslateButton();
