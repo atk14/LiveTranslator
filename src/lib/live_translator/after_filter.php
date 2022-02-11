@@ -23,6 +23,14 @@ class AfterFilter {
 			if(preg_match("/\"%$k\"/",$source_text)){
 				$out = preg_replace("/\" ?%$k ?\"/","\"%$k\"",$out);
 			}
+
+			if(!preg_match('/^\s/s',$source_text)){
+				$out = ltrim($out);
+			}
+
+			if(!preg_match('/\s$/s',$source_text)){
+				$out = rtrim($out);
+			}
 		}
 		return $out;	
 	}

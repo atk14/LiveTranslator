@@ -26,5 +26,15 @@ class TcAfterFilter extends TcBase {
 		$trn = 'Click <a href=" %s">here</a>';
 		$exp = 'Click <a href="%s">here</a>';
 		$this->assertEquals($exp,LiveTranslator\AfterFilter::Filter($src,$trn));
+
+		$src = '%1 Support Team';
+		$trn = ' %1 Екип за поддръжка';
+		$exp = '%1 Екип за поддръжка';
+		$this->assertEquals($exp,LiveTranslator\AfterFilter::Filter($src,$trn));
+
+		$src = 'Team %1';
+		$trn = 'Tým %1 ';
+		$exp = 'Tým %1';
+		$this->assertEquals($exp,LiveTranslator\AfterFilter::Filter($src,$trn));
 	}
 }
