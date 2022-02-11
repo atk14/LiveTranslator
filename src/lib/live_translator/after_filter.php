@@ -13,6 +13,11 @@ class AfterFilter {
 				$out = preg_replace("/% ?$k/"," %$k",$out);
 				$out = preg_replace("/  %$k/"," %$k",$out);
 			}
+
+			// <em> %1</em> -> <em>%1</em>
+			if(preg_match("/>%$k</",$source_text)){
+				$out = preg_replace("/> ?%$k ?</",">%$k<",$out);
+			}
 		}
 		return $out;	
 	}
