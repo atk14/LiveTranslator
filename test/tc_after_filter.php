@@ -21,5 +21,10 @@ class TcAfterFilter extends TcBase {
 		$trn = 'You don`t have a permission to access <em> %1</em> on this server.';
 		$exp = 'You don`t have a permission to access <em>%1</em> on this server.';
 		$this->assertEquals($exp,LiveTranslator\AfterFilter::Filter($src,$trn));
+
+		$src = 'Klikněte <a href="%s">zde</a>';
+		$trn = 'Click <a href=" %s">here</a>';
+		$exp = 'Click <a href="%s">here</a>';
+		$this->assertEquals($exp,LiveTranslator\AfterFilter::Filter($src,$trn));
 	}
 }

@@ -18,6 +18,11 @@ class AfterFilter {
 			if(preg_match("/>%$k</",$source_text)){
 				$out = preg_replace("/> ?%$k ?</",">%$k<",$out);
 			}
+
+			// <a href=" %s"> -> <a href="%s">
+			if(preg_match("/\"%$k\"/",$source_text)){
+				$out = preg_replace("/\" ?%$k ?\"/","\"%$k\"",$out);
+			}
 		}
 		return $out;	
 	}
