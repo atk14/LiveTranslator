@@ -16,6 +16,13 @@ class Translator {
 	function translate($text,&$translation_data = []){
 		$translation_data = [];
 
+		$back_replaces = [];
+		if(LIVE_TRANSLATOR_DEEPL_API_AUTH_KEY){
+			// At the moment,
+			// the BeforeFilter has functions which are only good for Deepl.com
+			$text = \LiveTranslator\BeforeFilter::Filter($text,$back_replaces);
+		}
+
 		$sw = new \StopWatch();
 		$sw->start();
 
@@ -36,6 +43,10 @@ class Translator {
 		$translation_data["duration"] = round($sw->getResult(),3);
 
 		$result = \LiveTranslator\AfterFilter::Filter($text,$result);
+
+		if($back_replaces){
+			$result = strtr($result,$back_replaces);
+		}
 
 		return $result;
 	}
