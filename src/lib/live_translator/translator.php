@@ -18,6 +18,8 @@ class Translator {
 
 		$back_replaces = [];
 		if(LIVE_TRANSLATOR_DEEPL_API_AUTH_KEY){
+			// At the moment,
+			// the BeforeFilter has functions which are only good for Deepl.com
 			$text = \LiveTranslator\BeforeFilter::Filter($text,$back_replaces);
 		}
 
