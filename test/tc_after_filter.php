@@ -36,5 +36,10 @@ class TcAfterFilter extends TcBase {
 		$trn = 'Tým %1 ';
 		$exp = 'Tým %1';
 		$this->assertEquals($exp,LiveTranslator\AfterFilter::Filter($src,$trn));
+
+		$src = 'Záznamy (%s) byly úspěšně smazány';
+		$trn = 'Записите ( %s) са успешно изтрити';
+		$exp = 'Записите (%s) са успешно изтрити';
+		$this->assertEquals($exp,LiveTranslator\AfterFilter::Filter($src,$trn));
 	}
 }

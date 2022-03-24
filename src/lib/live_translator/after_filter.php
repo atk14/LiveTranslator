@@ -31,6 +31,11 @@ class AfterFilter {
 			if(!preg_match('/\s$/s',$source_text)){
 				$out = rtrim($out);
 			}
+
+			// Записите ( %s) са успешно изтрити -> Записите (%s) са успешно изтрити
+			if(!preg_match("/\( %$k/",$source_text)){
+				$out = preg_replace("/\( %$k/","(%$k",$out);
+			}
 		}
 		return $out;	
 	}
