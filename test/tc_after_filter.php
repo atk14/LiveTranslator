@@ -41,5 +41,10 @@ class TcAfterFilter extends TcBase {
 		$trn = 'Записите ( %s) са успешно изтрити';
 		$exp = 'Записите (%s) са успешно изтрити';
 		$this->assertEquals($exp,LiveTranslator\AfterFilter::Filter($src,$trn));
+
+		$src = 'You are signed in as <em>%1</em>.';
+		$trn = 'Prijavljeni ste kao < em>%1</ em>.';
+		$exp = 'Prijavljeni ste kao <em>%1</em>.';
+		$this->assertEquals($exp,LiveTranslator\AfterFilter::Filter($src,$trn));
 	}
 }
