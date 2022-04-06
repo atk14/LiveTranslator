@@ -16,20 +16,20 @@ class Translator {
 	function translate($text,&$translation_data = []){
 		$translation_data = [];
 
-		$back_replaces = [];
-		if(LIVE_TRANSLATOR_DEEPL_API_AUTH_KEY){
-			// At the moment,
-			// the BeforeFilter has functions which are only good for Deepl.com
-			$text = \LiveTranslator\BeforeFilter::Filter($text,$back_replaces);
+		$provider = LIVE_TRANSLATOR_DEEPL_API_AUTH_KEY ? "deepl" : "google";
+
+		$text = \LiveTranslator\BeforeFilter::Filter($text,$back_replaces,["provider" => $provider]);
+
+		if(trim($text)==""){
+			$translation_data["provider"] = "none";
+			$translation_data["duration"] = 0.0;
+			return "";
 		}
 
 		$sw = new \StopWatch();
 		$sw->start();
 
-		if(trim($text)==""){
-			$result = "";
-			$provider = "none";
-		}elseif(LIVE_TRANSLATOR_DEEPL_API_AUTH_KEY){
+		if(LIVE_TRANSLATOR_DEEPL_API_AUTH_KEY){
 			$result = $this->_translate_using_deepl($text);
 			$provider = "deepl";
 		}else{
