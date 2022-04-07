@@ -38,7 +38,7 @@
 					return true;
 				},
 				error: function( xhr, statusTxt, errorTxt ) {
-					window.alert( "Problém s GoogleTranslate, zkuste překlad použít později\n\n" +
+					window.alert( "An issue occurred when using the translator API. Please try it later.\n\n" +
 							statusTxt + ": " + errorTxt +
 							"\nstatus: " + xhr.status + "\nsee javascript console for details" );
 
