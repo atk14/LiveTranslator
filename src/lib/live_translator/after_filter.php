@@ -45,6 +45,11 @@ class AfterFilter {
 			$out = preg_replace('/<(\/?)\s+/','<\1',$out);
 		}
 
+		// Iobject: [# 16 Слика: Обавићемо царињење за вас] -> [#16 Слика: Обавићемо царињење за вас]
+		if(!preg_match('/\[ ?# +\d+/',$source_text)){
+			$out = preg_replace('/\[ ?# +(\d+)/','[#\1',$out);
+		}
+
 		return $out;	
 	}
 }
