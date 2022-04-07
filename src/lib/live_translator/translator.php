@@ -16,7 +16,47 @@ class Translator {
 	function translate($text,&$translation_data = []){
 		$translation_data = [];
 
-		$provider = LIVE_TRANSLATOR_DEEPL_API_AUTH_KEY ? "deepl" : "google";
+		// see https://www.deepl.com/docs-api/other-functions/listing-supported-languages/
+		$deepl_supported_langs = [
+			"BG", // Bulgarian
+			"CS", // Czech
+			"DA", // Danish
+			"DE", // German
+			"EL", // Greek
+			"EN-GB", // English (British)
+			"EN-US", // English (American)
+			"ES", // Spanish
+			"ET", // Estonian
+			"FI", // Finnish
+			"FR", // French
+			"HU", // Hungarian
+			"IT", // Italian
+			"JA", // Japanese
+			"LT", // Lithuanian
+			"LV", // Latvian
+			"NL", // Dutch
+			"PL", // Polish
+			"PT-BR", // Portuguese (Brazilian)
+			"PT-PT", // Portuguese (European)
+			"RO", // Romanian
+			"RU", // Russian
+			"SK", // Slovak
+			"SL", // Slovenian
+			"SV", // Swedish
+			"ZH", // Chinese
+		];
+
+		$deepl_supported_langs[] = "EN";
+		$deepl_supported_langs[] = "PT";
+
+		$provider = "google";
+		if(
+			LIVE_TRANSLATOR_DEEPL_API_AUTH_KEY &&
+			in_array(strtoupper($this->source_lang),$deepl_supported_langs) &&
+			in_array(strtoupper($this->target_lang),$deepl_supported_langs)
+		){
+			$provider = "deepl";
+		}
 
 		$text = \LiveTranslator\BeforeFilter::Filter($text,$back_replaces,["provider" => $provider]);
 
@@ -29,12 +69,10 @@ class Translator {
 		$sw = new \StopWatch();
 		$sw->start();
 
-		if(LIVE_TRANSLATOR_DEEPL_API_AUTH_KEY){
+		if($provider == "deepl"){
 			$result = $this->_translate_using_deepl($text);
-			$provider = "deepl";
 		}else{
 			$result = $this->_translate_using_google($text);
-			$provider = "google";
 		}
 
 		$sw->stop();
