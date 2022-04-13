@@ -76,35 +76,58 @@ class Translator {
 			$provider = "deepl";
 		}
 
-		$text = \LiveTranslator\BeforeFilter::Filter($this,$text,$back_replaces,["provider" => $provider]);
+		$trunk = \LiveTranslator\BeforeFilter::Filter($this,$text,$back_replaces,["provider" => $provider]);
 
-		if(trim($text)==""){
+		if(trim($trunk)==""){
 			$translation_data["provider"] = "none";
 			$translation_data["duration"] = 0.0;
 			return "";
 		}
 
-		$sw = new \StopWatch();
-		$sw->start();
+		$out = [];
 
-		if($provider == "deepl"){
-			$result = $this->_translate_using_deepl($text);
-		}else{
-			$result = $this->_translate_using_google($text);
+		$sw = new \StopWatch();
+
+		$api_calls_counter = 0;
+
+		foreach($trunk->getChunks() as $chunk){
+
+			if(!$chunk->isTranslatable()){
+				$out[] = $chunk->toString();
+				continue;
+			}
+
+			if($api_calls_counter>0){
+				usleep(100000); // 0.1 sec
+			}
+
+			$sw->start();
+			if($provider == "deepl"){
+				$result = $this->_translate_using_deepl($chunk->toString());
+			}else{
+				$result = $this->_translate_using_google($chunk->toString());
+			}
+			$sw->stop();
+
+			$api_calls_counter++;
+
+			$result = \LiveTranslator\AfterFilter::Filter($this,$text,$result);
+
+			$out[] = $result;
 		}
 
-		$sw->stop();
 
 		$translation_data["provider"] = $provider;
+		$translation_data["api_calls"] = $api_calls_counter;
 		$translation_data["duration"] = round($sw->getResult(),3);
 
-		$result = \LiveTranslator\AfterFilter::Filter($this,$text,$result);
+		$out = join("",$out);
 
 		if($back_replaces){
-			$result = strtr($result,$back_replaces);
+			$out = strtr($out,$back_replaces);
 		}
 
-		return $result;
+		return $out;
 	}
 
 	protected function _translate_using_google($text){

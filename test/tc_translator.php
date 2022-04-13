@@ -19,7 +19,14 @@ class TcTranslator extends TcBase {
 		$result = $translator->translate("Testování je tak krásné",$data);
 		$this->assertEquals("Testovanie je tak krásne",$result);
 
-		//$result = $translator->translate('[row class="nice-row"][col]Testování je tak krásné[/col][row]',$data);
-		//$this->assertEquals("Testing is so beautiful",$result);
+		$translator = new LiveTranslator\Translator("cs","sr");
+		$result = $translator->translate('<a href="https://testovani.com/">Testování</a> je tak <em>krásné</em>',$data);
+		$this->assertEquals('<a href="https://testovani.com/">Testiranje</a> je tako <em>lepo</em>',$result);
+		$this->assertEquals(3,$data["api_calls"]);
+
+		$translator = new LiveTranslator\Translator("cs","en");
+		$result = $translator->translate('[row class="nice-row"][col] Testování je tak krásné [/col][/row]',$data);
+		$this->assertEquals('[row class="nice-row"][col] Testing is so beautiful [/col][/row]',$result);
+		$this->assertEquals(1,$data["api_calls"]);
 	}
 }
