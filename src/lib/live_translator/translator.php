@@ -80,6 +80,7 @@ class Translator {
 
 		if(trim($trunk)==""){
 			$translation_data["provider"] = "none";
+			$translation_data["api_calls"] = 0;
 			$translation_data["duration"] = 0.0;
 			return "";
 		}
