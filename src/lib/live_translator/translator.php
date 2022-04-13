@@ -7,10 +7,28 @@ class Translator {
 
 	protected $source_lang;
 	protected $target_lang;
+	protected $options;
 
-	function __construct($source_lang,$target_lang){
+	function __construct($source_lang,$target_lang,$options = []){
+		$options += [
+			"latinize_serbian" => true,
+		];
+
 		$this->source_lang = $source_lang;
 		$this->target_lang = $target_lang;
+		$this->options = $options;
+	}
+
+	function getSourceLang(){
+		return $this->source_lang;
+	}
+
+	function getTargetLang(){
+		return $this->target_lang;
+	}
+
+	function getOptions(){
+		return $this->options;
 	}
 
 	function translate($text,&$translation_data = []){
@@ -58,7 +76,7 @@ class Translator {
 			$provider = "deepl";
 		}
 
-		$text = \LiveTranslator\BeforeFilter::Filter($text,$back_replaces,["provider" => $provider]);
+		$text = \LiveTranslator\BeforeFilter::Filter($this,$text,$back_replaces,["provider" => $provider]);
 
 		if(trim($text)==""){
 			$translation_data["provider"] = "none";
@@ -80,7 +98,7 @@ class Translator {
 		$translation_data["provider"] = $provider;
 		$translation_data["duration"] = round($sw->getResult(),3);
 
-		$result = \LiveTranslator\AfterFilter::Filter($text,$result);
+		$result = \LiveTranslator\AfterFilter::Filter($this,$text,$result);
 
 		if($back_replaces){
 			$result = strtr($result,$back_replaces);

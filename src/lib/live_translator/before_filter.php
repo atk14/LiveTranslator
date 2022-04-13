@@ -3,7 +3,7 @@ namespace LiveTranslator;
 
 class BeforeFilter {
 
-	static function Filter($source_text,&$back_replaces = [],$options = []){
+	static function Filter($live_translator,$source_text,&$back_replaces = [],$options = []){
 		$options += [
 			"provider" => "google", // "google", "deepl"
 			"uniqid" => "c".md5(uniqid()),

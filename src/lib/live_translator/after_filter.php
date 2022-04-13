@@ -3,7 +3,22 @@ namespace LiveTranslator;
 
 class AfterFilter {
 
-	static function Filter($source_text,$translation) {
+	static protected $serbianCyrillicLetters = [ "љ",  "њ", "е",  "р", "т",  "з",  "у", "и",
+		"о", "п", "ш", "ђ",  "ж",  "а",  "с", "д",  "ф", "г",  "х",  "ј", "к",
+		"л", "ч", "ћ", "џ",  "ц",  "в",  "б", "н",  "м", "Љ",  "Њ",  "Е", "Р",
+		"Т", "З", "У", "И",  "О",  "П",  "Ш", "Ђ",  "Ж", "А",  "С",  "Д", "Ф",
+		"Г", "Х", "Ј", "К",  "Л",  "Ч",  "Ћ", "Џ",  "Ц", "В",  "Б",  "Н", "М" ];
+
+	static protected $serbianLatinLetters = [ "lj", "nj", "e", "r",  "t", "z",  "u",  "i",
+		"o", "p", "š", "đ",  "ž",  "a",  "s", "d",  "f", "g",  "h",  "j", "k",
+		"l", "č", "ć", "dž", "c",  "v",  "b", "n",  "m", "Lj", "Nj", "E", "R",
+		"T", "Z", "U", "I",  "O",  "P",  "Š", "Đ",  "Ž", "A",  "S",  "D", "F",
+		"G", "H", "J", "K",  "L",  "Č",  "Đ", "Dž", "C", "V",  "B",  "N", "M" ];
+
+	static function Filter($live_translator,$source_text,$translation) {
+		$options = $live_translator->getOptions();
+		$target_lang = $live_translator->getTargetLang();
+
 		$out = $translation;
 
 		if(preg_match('/&nbsp;/',$source_text)){
@@ -48,6 +63,10 @@ class AfterFilter {
 		// Iobject: [# 16 Слика: Обавићемо царињење за вас] -> [#16 Слика: Обавићемо царињење за вас]
 		if(!preg_match('/\[ ?# +\d+/',$source_text)){
 			$out = preg_replace('/\[ ?# +(\d+)/','[#\1',$out);
+		}
+
+		if($target_lang=="sr" && $options["latinize_serbian"]){
+			$out = strtr($out,array_combine(self::$serbianCyrillicLetters,self::$serbianLatinLetters));
 		}
 
 		return $out;	
