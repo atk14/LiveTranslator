@@ -78,13 +78,6 @@ class Translator {
 
 		$trunk = \LiveTranslator\BeforeFilter::Filter($this,$text,$back_replaces,["provider" => $provider]);
 
-		if(trim($trunk)==""){
-			$translation_data["provider"] = "none";
-			$translation_data["api_calls"] = 0;
-			$translation_data["duration"] = 0.0;
-			return "";
-		}
-
 		$out = [];
 
 		$sw = new \StopWatch();
@@ -117,8 +110,7 @@ class Translator {
 			$out[] = $result;
 		}
 
-
-		$translation_data["provider"] = $provider;
+		$translation_data["provider"] = $api_calls_counter>0 ? $provider : "none";
 		$translation_data["api_calls"] = $api_calls_counter;
 		$translation_data["duration"] = round($sw->getResult(),3);
 
