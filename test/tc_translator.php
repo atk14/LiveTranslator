@@ -5,8 +5,9 @@ class TcTranslator extends TcBase {
 		$translator = new LiveTranslator\Translator("cs","en");
 		
 		$result = $translator->translate(" ",$data);
-		$this->assertEquals("",$result);
+		$this->assertEquals(" ",$result);
 		$this->assertEquals("none",$data["provider"]);
+		$this->assertEquals(0,$data["api_calls"]);
 		$this->assertEquals(0.0,$data["duration"]);
 
 		$result = $translator->translate("Testování je tak krásné",$data);
@@ -19,7 +20,22 @@ class TcTranslator extends TcBase {
 		$result = $translator->translate("Testování je tak krásné",$data);
 		$this->assertEquals("Testovanie je tak krásne",$result);
 
-		//$result = $translator->translate('[row class="nice-row"][col]Testování je tak krásné[/col][row]',$data);
-		//$this->assertEquals("Testing is so beautiful",$result);
+		$translator = new LiveTranslator\Translator("cs","sr");
+		$result = $translator->translate('<a href="https://testovani.com/">Testování</a> je tak <em>krásné</em>',$data);
+		$this->assertEquals('<a href="https://testovani.com/">Testiranje</a> je tako <em>lepo</em>',$result);
+		$this->assertEquals("google",$data["provider"]);
+		$this->assertEquals(3,$data["api_calls"]);
+
+		$translator = new LiveTranslator\Translator("cs","sr");
+		$result = $translator->translate('<a href="https://testovani.com/"> <i class="fa fa-globe" aria-hidden="true"></i> </a>',$data);
+		$this->assertEquals('<a href="https://testovani.com/"> <i class="fa fa-globe" aria-hidden="true"></i> </a>',$result);
+		$this->assertEquals("none",$data["provider"]);
+		$this->assertEquals(0,$data["api_calls"]);
+
+		$translator = new LiveTranslator\Translator("cs","en");
+		$result = $translator->translate('[row class="nice-row"][col] Testování je tak krásné [/col][/row]',$data);
+		$this->assertEquals('[row class="nice-row"][col] Testing is so beautiful [/col][/row]',$result);
+		$this->assertEquals("google",$data["provider"]);
+		$this->assertEquals(1,$data["api_calls"]);
 	}
 }

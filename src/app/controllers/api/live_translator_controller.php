@@ -21,6 +21,7 @@ class LiveTranslatorController extends ApiController {
 				$this->api_data = [
 					"result" => $result,
 					"provider" => $translation_data["provider"],
+					"api_calls" => $translation_data["api_calls"],
 					"duration" => $translation_data["duration"],
 				];
 			}catch(Exception $e){
