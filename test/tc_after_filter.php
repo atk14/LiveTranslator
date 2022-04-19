@@ -53,6 +53,16 @@ class TcAfterFilter extends TcBase {
 		$trn = '[# 16 Слика: Обавићемо царињење за вас]';
 		$exp = '[#16 Слика: Обавићемо царињење за вас]';
 		$this->assertEquals($exp,LiveTranslator\AfterFilter::Filter($lt,$src,$trn));
+
+		$src = '[Duck Duck Go](https://duckduckgo.com)';
+		$trn = '[Duck Duck Go] (https://duckduckgo.com)';
+		$exp = '[Duck Duck Go](https://duckduckgo.com)';
+		$this->assertEquals($exp,LiveTranslator\AfterFilter::Filter($lt,$src,$trn));
+
+		$src = '[Duck Duck Go](https://duckduckgo.com){.blank}';
+		$trn = '[Duck Duck Go](https://duckduckgo.com) {.blank}';
+		$exp = '[Duck Duck Go](https://duckduckgo.com){.blank}';
+		$this->assertEquals($exp,LiveTranslator\AfterFilter::Filter($lt,$src,$trn));
 	}
 
 	function test_serbian_latinization(){

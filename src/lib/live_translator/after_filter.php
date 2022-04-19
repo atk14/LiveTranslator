@@ -65,6 +65,16 @@ class AfterFilter {
 			$out = preg_replace('/\[ ?# +(\d+)/','[#\1',$out);
 		}
 
+		// [Duck Duck Go] (https://duckduckgo.com) -> [Duck Duck Go](https://duckduckgo.com)
+		if(!preg_match('/\] \(/',$source_text)){
+			$out = preg_replace('/\] \(/','](',$out);
+		}
+
+		// [Duck Duck Go](https://duckduckgo.com) {.blank} -> [Duck Duck Go](https://duckduckgo.com){.blank}
+		if(!preg_match('/\) \{/',$source_text)){
+			$out = preg_replace('/\) \{/','){',$out);
+		}
+
 		if($target_lang=="sr" && $options["latinize_serbian"]){
 			$out = strtr($out,array_combine(self::$serbianCyrillicLetters,self::$serbianLatinLetters));
 		}
