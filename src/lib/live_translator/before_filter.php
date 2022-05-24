@@ -14,7 +14,7 @@ class BeforeFilter {
 			
 		// The following replace markdown shortcuts [row][/row], [col][/col] and [div][/div]
 		// to HTML tags <div class="...."></div>
-		$well_known_markdown_shortcodes = ["div","row","col"];
+		$well_known_markdown_shortcodes = ["div","span","row","col"];
 		$well_known_markdown_shortcodes = "(".join("|",$well_known_markdown_shortcodes).")";
 		$counter = 1;
 		$source_text = preg_replace_callback(
