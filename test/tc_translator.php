@@ -18,7 +18,7 @@ class TcTranslator extends TcBase {
 
 		$translator = new LiveTranslator\Translator("cs","sk");
 		$result = $translator->translate("Testování je tak krásné",$data);
-		$this->assertEquals("Testovanie je tak krásne",$result);
+		$this->assertEquals("Testovanie je také krásne",$result);
 
 		$translator = new LiveTranslator\Translator("cs","sr");
 		$result = $translator->translate('<a href="https://testovani.com/">Testování</a> je tak <em>krásné</em>',$data);
