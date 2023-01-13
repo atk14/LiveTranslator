@@ -47,6 +47,11 @@ class AfterFilter {
 			}
 		}
 
+		// Ricerca: ' %s' -> Ricerca: '%s'
+		if(!preg_match("/' /",$source_text)){
+			$out = preg_replace("/' /","'",$out);
+		}
+
 		if(!preg_match('/^\s/s',$source_text)){
 			$out = ltrim($out);
 		}

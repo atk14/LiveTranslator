@@ -63,6 +63,11 @@ class TcAfterFilter extends TcBase {
 		$trn = '[Duck Duck Go](https://duckduckgo.com) {.blank}';
 		$exp = '[Duck Duck Go](https://duckduckgo.com){.blank}';
 		$this->assertEquals($exp,LiveTranslator\AfterFilter::Filter($lt,$src,$trn));
+
+		$src = "Vyhledávání: „%s“";
+		$trn = "Ricerca: ' %s'";
+		$exp = "Ricerca: '%s'";
+		$this->assertEquals($exp,LiveTranslator\AfterFilter::Filter($lt,$src,$trn));
 	}
 
 	function test_serbian_latinization(){
