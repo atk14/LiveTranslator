@@ -32,6 +32,11 @@
 						targetElement.hasClass( "md-textarea-hidden" )
 					) {
 						targetElement.markdownEditor( "setContent", json.result );
+					} else if (
+						typeof tinymce !== 'undefined' &&
+						tinymce.get( targetElement.attr( "id" ))
+					)  {
+						tinymce.get( targetElement.attr( "id" ) ).setContent( json.result );
 					} else {
 						targetElement.val( json.result );
 					}
