@@ -36,6 +36,7 @@
 						typeof tinymce !== 'undefined' &&
 						tinymce.get( targetElement.attr( "id" ))
 					)  {
+						// TinyMCE version 4
 						tinymce.get( targetElement.attr( "id" ) ).setContent( json.result );
 					} else {
 						targetElement.val( json.result );
