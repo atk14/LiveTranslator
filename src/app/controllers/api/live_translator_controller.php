@@ -26,6 +26,7 @@ class LiveTranslatorController extends ApiController {
 				];
 			}catch(Exception $e){
 				$this->_report_fail(array("error" => _("Translator error"), "exception" => get_class($e), "message" => $e->getMessage()), 400);
+				trigger_error(sprintf("api/live_translator/translate: Translator error (exception: %s, message: %s)",get_class($e),$e->getMessage()));
 			}
 
 		}
