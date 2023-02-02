@@ -6,17 +6,17 @@
 
 	var currentLang = $( "html" ).attr( "lang" );
 
+	var sourceLang = $( "html" ).data( "live_translator_source_lang" ) || currentLang;
+
 	Translator = {
 		Translate: function( sourceElement, targetElement ) {
 
 			targetElement = $( targetElement );
 			sourceElement = $( sourceElement );
-			var sourceLang = sourceElement.data( "translatable_lang" );
-			var targetLang = targetElement.data( "translatable_lang" );
 
 			var queryParams = {
-				source_lang: sourceLang,
-				target_lang: targetLang,
+				source_lang: sourceElement.data( "translatable_lang" ),
+				target_lang: targetElement.data( "translatable_lang" ),
 				q: sourceElement.val(),
 				format: "json"
 			};
@@ -73,8 +73,8 @@
 		appendTranslateButton: function() {
 			var linkText = currentLang === "cs" ? "Přeložit" : "Translate";
 			var linkTitle = currentLang === "cs" ?
-				"Přeložit překladačem z " + currentLang :
-				"Translate from " + currentLang + " using the translator";
+				"Přeložit překladačem z " + sourceLang :
+				"Translate from " + sourceLang + " using the translator";
 			this.each( function() {
 				var link = $( "<a>", { href: "#", text: linkText, tabindex: "-1000" } )
 					.addClass( "btn btn-info btn-sm btn-xs" )
@@ -85,7 +85,7 @@
 
 				var selfId = $( this ).attr( "id" );
 				selfId = selfId.substr( 0, selfId.lastIndexOf( "_" ) );
-				var sourceInputId = selfId + "_" + $( "html" ).attr( "lang" );
+				var sourceInputId = selfId + "_" + sourceLang;
 
 				var targetInput = $( this );
 				link.click( function() {
@@ -104,7 +104,6 @@
 				}
 
 				parentFormGroup.find( ".help-block" ).prepend( link );
-
 			} );
 		},
 
@@ -131,7 +130,6 @@
 				}
 
 				parentFormGroup.find( ".help-block" ).prepend( badge );
-
 			} );
 		}
 	} );
@@ -142,7 +140,7 @@
 		var input = $( el );
 
 		var targetLang = input.data( "translatable_lang" );
-		if ( targetLang === currentLang ) {
+		if ( targetLang === sourceLang ) {
 			input.appendSourceLangBadge();
 			return;
 		}
