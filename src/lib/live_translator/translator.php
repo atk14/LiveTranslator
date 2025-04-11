@@ -138,7 +138,25 @@ class Translator {
 	}
 
 	protected function _translate_using_deepl($text){
-		$adf = new \ApiDataFetcher("https://api".(LIVE_TRANSLATOR_DEEPL_API_PRO ? "" : "-free").".deepl.com/v2/",["lang" => "", "automatically_add_trailing_slash" => false]);
+		$adf = new \ApiDataFetcher("https://api".(LIVE_TRANSLATOR_DEEPL_API_PRO ? "" : "-free").".deepl.com/v2/",[
+			"lang" => "",
+			"automatically_add_trailing_slash" => false,
+			"get_content_callback" => function($url_fetcher){
+				// Filtering this:
+				//
+				// 55
+				//	{"translations":[{"detected_source_language":"CS","text":"Testing is so beautiful"}]}
+				// 0
+				//
+				// into this:
+				//
+				// {"translations":[{"detected_source_language":"CS","text":"Testing is so beautiful"}]}
+				$content = trim($url_fetcher->getContent());
+				$content = preg_replace('/^[0-9A-F]+\s*{/s','{',$content);
+				$content = preg_replace('/}\s*[0-9A-F]+/s','}',$content);
+				return $content;
+			}
+		]);
 
 		$data = $adf->post("translate",[
 			"text" => $text,

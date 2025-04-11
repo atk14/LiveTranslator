@@ -12,7 +12,7 @@ class TcTranslator extends TcBase {
 
 		$result = $translator->translate("Testování je tak krásné",$data);
 		$this->assertEquals("Testing is so beautiful",$result);
-		$this->assertEquals("google",$data["provider"]);
+		$this->assertEquals("deepl",$data["provider"]);
 		$this->assertTrue(is_float($data["duration"]));
 		$this->assertTrue($data["duration"]>0.0);
 
@@ -33,9 +33,9 @@ class TcTranslator extends TcBase {
 		$this->assertEquals(0,$data["api_calls"]);
 
 		$translator = new LiveTranslator\Translator("cs","en");
-		$result = $translator->translate('[row class="nice-row"][col] Testování je tak krásné [/col][/row]',$data);
-		$this->assertEquals('[row class="nice-row"][col] Testing is so beautiful [/col][/row]',$result);
-		$this->assertEquals("google",$data["provider"]);
+		$result = $translator->translate('[row class="nice-row"][col] Testování je tak krásné. [/col][/row]',$data);
+		$this->assertEquals('[row class="nice-row"][col] Testing is so beautiful. [/col][/row]',$result);
+		$this->assertEquals("deepl",$data["provider"]);
 		$this->assertEquals(1,$data["api_calls"]);
 	}
 }
