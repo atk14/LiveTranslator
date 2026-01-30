@@ -22,7 +22,7 @@ class TcTranslator extends TcBase {
 
 		$translator = new LiveTranslator\Translator("cs","sr");
 		$result = $translator->translate('<a href="https://testovani.com/">Testování</a> je tak <em>krásné</em>',$data);
-		$this->assertEquals('<a href="https://testovani.com/">Testiranje</a> je tako <em>lepo</em>',$result);
+		$this->assertEquals('<a href="https://testovani.com/">Testiranje</a> tako je <em>prelepo</em>',$result);
 		$this->assertEquals("google",$data["provider"]);
 		$this->assertEquals(3,$data["api_calls"]);
 

@@ -141,6 +141,9 @@ class Translator {
 		$adf = new \ApiDataFetcher("https://api".(LIVE_TRANSLATOR_DEEPL_API_PRO ? "" : "-free").".deepl.com/v2/",[
 			"lang" => "",
 			"automatically_add_trailing_slash" => false,
+			"additional_headers" => [
+				"Authorization: DeepL-Auth-Key ".LIVE_TRANSLATOR_DEEPL_API_AUTH_KEY,
+			],
 			"get_content_callback" => function($url_fetcher){
 				// Filtering this:
 				//
@@ -162,7 +165,6 @@ class Translator {
 			"text" => $text,
 			"target_lang" => strtoupper($this->target_lang),
 			"source_lang" => strtoupper($this->source_lang),
-			"auth_key" => LIVE_TRANSLATOR_DEEPL_API_AUTH_KEY,
 		]);
 		return $data["translations"][0]["text"];
 	}
