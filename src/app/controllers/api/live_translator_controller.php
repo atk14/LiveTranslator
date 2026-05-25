@@ -12,6 +12,14 @@
 
 class LiveTranslatorController extends ApiController {
 
+	/**
+	 * ### Translates the given message into another language
+	 *
+	 * #### HTTP status codes
+	 * * 200 Found
+	 * * 403 Forbidden: This service is intended only for logged-in administrators
+	 * * 400 Bad Request
+	 */
 	function translate() {
 		if ($this->request->post() && ($d=$this->form->validate($this->params))) {
 
