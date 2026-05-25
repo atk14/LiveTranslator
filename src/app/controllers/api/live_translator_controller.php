@@ -32,6 +32,10 @@ class LiveTranslatorController extends ApiController {
 		}
 	}
 
+	function _logged_admin_required(){
+		return true;
+	}
+
 	function _before_filter() {
 		if (! ($this->logged_user && $this->logged_user->isAdmin()) ) {
 			return $this->_execute_action("error403");
