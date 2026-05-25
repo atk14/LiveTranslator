@@ -2,6 +2,10 @@
 
 All notable changes to LiveTranslator will be documented in this file.
 
+## [0.1.3] - 2026-01-30
+
+* aecff9f - Added `LiveTranslatorController::_logged_admin_required()` method
+
 ## [0.1.2] - 2026-01-30
 
 * 81e5e3f - Change in authentication against Deepl API
