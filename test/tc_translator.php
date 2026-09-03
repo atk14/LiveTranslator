@@ -10,15 +10,15 @@ class TcTranslator extends TcBase {
 		$this->assertEquals(0,$data["api_calls"]);
 		$this->assertEquals(0.0,$data["duration"]);
 
-		$result = $translator->translate("Testování je tak krásné",$data);
-		$this->assertEquals("Testing is so wonderful",$result);
+		$result = $translator->translate("Testování je tak krásné.",$data);
+		$this->assertEquals("Testing is so wonderful.",$result);
 		$this->assertEquals("deepl",$data["provider"]);
 		$this->assertTrue(is_float($data["duration"]));
 		$this->assertTrue($data["duration"]>0.0);
 
 		$translator = new LiveTranslator\Translator("cs","sk");
-		$result = $translator->translate("Testování je tak krásné",$data);
-		$this->assertEquals("Testovanie je také krásne",$result);
+		$result = $translator->translate("Testování je skutečně krásné",$data);
+		$this->assertEquals("Testovanie je naozaj krásne",$result);
 
 		$translator = new LiveTranslator\Translator("cs","sr");
 		$result = $translator->translate('<a href="https://testovani.com/">Testování</a> je tak <em>krásné</em>',$data);

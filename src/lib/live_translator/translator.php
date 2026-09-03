@@ -112,7 +112,7 @@ class Translator {
 
 		$translation_data["provider"] = $api_calls_counter>0 ? $provider : "none";
 		$translation_data["api_calls"] = $api_calls_counter;
-		$translation_data["duration"] = round($sw->getResult(),3);
+		$translation_data["duration"] = is_null($sw->getResult()) ? null : round($sw->getResult(),3);
 
 		$out = join("",$out);
 
