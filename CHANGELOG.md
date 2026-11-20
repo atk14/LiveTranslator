@@ -2,6 +2,10 @@
 
 All notable changes to LiveTranslator will be documented in this file.
 
+## [0.1.4] - 2026-11-20
+
+* 132167a - Protect complex URLs from being mangled during translation
+
 ## [0.1.3] - 2026-01-30
 
 * aecff9f - Added `LiveTranslatorController::_logged_admin_required()` method
