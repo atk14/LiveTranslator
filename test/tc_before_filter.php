@@ -26,4 +26,21 @@ class TcBeforeFilter extends TcBase {
 			'<div class="c6"></div>' => '[/row]',
 		],$back_replaces);
 	}
+
+	function test_url(){
+		$lt = new LiveTranslator\Translator("en","cs");
+
+		$trunk = LiveTranslator\BeforeFilter::Filter($lt,'See http://www.example.com/?a=1&b=2 for details.',$back_replaces);
+		$this->assertEquals('See https://www.example1.com/ for details.',$trunk->toString());
+		$this->assertEquals([
+			'https://www.example1.com/' => 'http://www.example.com/?a=1&b=2',
+		],$back_replaces);
+
+		$trunk = LiveTranslator\BeforeFilter::Filter($lt,'http://foo.com/x?y=1 and http://bar.com/z?w=2',$back_replaces);
+		$this->assertEquals('https://www.example1.com/ and https://www.example2.com/',$trunk->toString());
+		$this->assertEquals([
+			'https://www.example1.com/' => 'http://foo.com/x?y=1',
+			'https://www.example2.com/' => 'http://bar.com/z?w=2',
+		],$back_replaces);
+	}
 }
