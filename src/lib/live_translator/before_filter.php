@@ -11,7 +11,23 @@ class BeforeFilter {
 
 		$back_replaces = [];
 		$uniqid = $options["uniqid"];
-			
+
+		// Translation APIs tend to mangle long URLs (adding spaces around encoded
+		// characters, breaking query strings, ...). They are swapped here for innocuous
+		// placeholder URLs and restored to their original value after translation
+		// (the restoring happens in Translator::translate() via $back_replaces).
+		$url_counter = 0;
+		$source_text = preg_replace_callback(
+			'#https?://[^\s<>"\']+#i',
+			function($matches) use(&$url_counter,&$back_replaces){
+				$url_counter++;
+				$replace = "https://www.example{$url_counter}.com/";
+				$back_replaces[$replace] = $matches[0];
+				return $replace;
+			},
+			$source_text
+		);
+
 		// The following replace markdown shortcuts [row][/row], [col][/col] and [div][/div]
 		// to HTML tags <div class="...."></div>
 		$well_known_markdown_shortcodes = ["div","span","row","col"];

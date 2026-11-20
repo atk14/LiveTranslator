@@ -38,4 +38,14 @@ class TcTranslator extends TcBase {
 		$this->assertEquals("deepl",$data["provider"]);
 		$this->assertEquals(1,$data["api_calls"]);
 	}
+
+	function test_url(){
+		$translator = new LiveTranslator\Translator("cs","en");
+
+		$result = $translator->translate("http://www.example.com",$data);
+		$this->assertEquals("http://www.example.com",$result);
+
+		$result = $translator->translate("http://www.example.com/?f_c%5B%5D=18&f_we%5Bmin%5D=&f_we%5Bmax%5D=&f_w%5Bmin%5D=&f_w%5Bmax%5D=&f_bp=",$data);
+		$this->assertEquals("http://www.example.com/?f_c%5B%5D=18&f_we%5Bmin%5D=&f_we%5Bmax%5D=&f_w%5Bmin%5D=&f_w%5Bmax%5D=&f_bp=",$result);
+	}
 }
